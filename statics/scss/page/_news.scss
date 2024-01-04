@@ -1,0 +1,48 @@
+
+.inforArticle-content {
+	.box-article-detail {
+		ul {
+			list-style: disc;
+			margin-left: 2em;
+			margin-top: 1em;
+			margin-bottom: 1em;
+			li {
+				margin-bottom: 0.2em;
+			}
+		}
+		table {
+			margin-top: 1em;
+			margin-bottom: 1em;
+			margin-top: 1em;
+			margin-bottom: 1em;
+		}
+		ol {
+			list-style: number;
+			margin-left: 2em;
+			margin-top: 1em;
+			margin-bottom: 1em;
+			li {
+				margin-bottom: 0.2em;
+			}
+		}
+		h1 {
+			margin-bottom: 0.2em;
+			font-size: 36px !important;
+		}
+		h2 {
+			margin-bottom: 0.2em;
+			font-size: 26px !important;
+		}
+		h3 {
+			margin-bottom: 0.2em;
+			font-size: 21px !important;
+		}
+		h4 {
+			margin-bottom: 0.2em;
+			font-size: 16px !important;
+		}
+		p {
+			margin-bottom: 1em !important;
+		}
+	}
+}

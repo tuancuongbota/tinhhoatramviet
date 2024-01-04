@@ -330,6 +330,37 @@ $(document).ready(function () {
 				slider.data('owl.carousel').to(number, duration, true);
 			});
         }
+        if ($('.list-blogs-related.owl-carousel').length > 0){
+            $('.list-blogs-related.owl-carousel').owlCarousel({
+                items: 3,
+                nav: true,
+                dots: false,
+                loop: false,	
+                margin: 30,
+                smartSpeed:1200,
+                autoplayTimeout: 1500,
+                responsive: {
+                    0: {
+                        items: 2,
+                        margin: 0,
+                        stagePadding: 30
+                    },
+                    768: {
+                        items: 3,
+                        margin: 15
+                    },
+                    992: {
+                        items: 3,
+                        margin: 15
+                    },
+                    1200: {
+                        items: 3,
+                        touchDrag: $('.list-blogs-related.owl-carousel').length > 3 ? true:false,
+                        mouseDrag: $('.list-blogs-related.owl-carousel').length > 3 ? true:false
+                    }
+                }
+            });
+        }
         var popover = '.cp-icon[data-toggle="popover"]';
 		$(popover).popover({
 			html: true,
@@ -868,5 +899,107 @@ $(document).ready(function () {
 			}
 			closeFilterMobile();	
 		});	
+    }
+    $('.plus-nClick1').click(function(e){
+        e.preventDefault();
+        $(this).parents('.level0').toggleClass('opened');
+        $(this).parents('.level0').children('ul').slideToggle(200);
+    });
+    $('.plus-nClick2').click(function(e){
+        e.preventDefault();
+        $(this).parents('.level1').toggleClass('opened');
+        $(this).parents('.level1').children('ul').slideToggle(200);
+    });
+    jQuery('.sidebox-title .htitle').click(function(){
+        $(this).parents('.group-sidebox').toggleClass('is-open').find('.sidebox-content-togged').slideToggle('medium');
+    }); 
+    if ($('.layout-article').length > 0){
+        class TableOfContents {
+            constructor({ from, to }) {
+                this.fromElement = from;
+                this.toElement = to;
+                this.headingElements = this.fromElement.querySelectorAll("h1, h2, h3,h4,h5,h6");
+                this.tocElement = document.createElement("div")
+            }
+            getMostImportantHeadingLevel() {
+                let mostImportantHeadingLevel = 6; // <h6> heading level
+                for (let i = 0; i < this.headingElements.length; i++) {
+                    let headingLevel = TableOfContents.getHeadingLevel(this.headingElements[i]);
+                    mostImportantHeadingLevel = (headingLevel < mostImportantHeadingLevel) ?
+                        headingLevel : mostImportantHeadingLevel;
+                }
+                return mostImportantHeadingLevel;
+            }
+            static generateId(headingElement) {
+                return urlfriendly(headingElement.textContent)
+            }
+            static getHeadingLevel(headingElement) {
+                switch (headingElement.tagName.toLowerCase()) {							
+                    case "h2": return 2;
+                    case "h3": return 3;
+                        break;
+                    default: return 4;
+                }
+            }
+            generateTable() {
+                let currentLevel = this.getMostImportantHeadingLevel() - 1,
+                        currentElement = this.tocElement;
+                for (let i = 0; i < this.headingElements.length; i++) {
+                    let headingElement = this.headingElements[i],
+                            headingLevel = TableOfContents.getHeadingLevel(headingElement),
+                            headingLevelDifference = headingLevel - currentLevel,
+                            linkElement = document.createElement("a");
+                    if (!headingElement.id) {
+                        headingElement.id = TableOfContents.generateId(headingElement);
+                    }
+                    linkElement.href = `#${headingElement.id}`;
+                    linkElement.textContent = headingElement.textContent;
+
+                    if (headingLevelDifference > 0) {
+                        // Go down the DOM by adding list elements.
+                        for (let j = 0; j < headingLevelDifference; j++) {
+                            let listElement = document.createElement("ul"),													
+                                    listItemElement = document.createElement("li");
+                            listElement.appendChild(listItemElement);
+                            currentElement.appendChild(listElement);
+                            currentElement = listItemElement;
+                        }
+                        currentElement.appendChild(linkElement);
+                    } 
+                    else {
+                        // Go up the DOM.
+                        for (let j = 0; j < -headingLevelDifference; j++) {
+                            currentElement = currentElement.parentNode.parentNode;
+                        }
+                        let listItemElement = document.createElement("li");
+                        listItemElement.appendChild(linkElement);
+                        currentElement.parentNode.appendChild(listItemElement);
+                        currentElement = listItemElement;
+                    }
+                    currentLevel = headingLevel;
+                }
+                if(this.tocElement.firstChild != null){
+                    this.toElement.appendChild(this.tocElement.firstChild);
+                }else{
+                    document.getElementById("table-content-container").remove();
+                }
+            }
+        }
+        var stringtemplate = $('<div id="table-content-container" class="table-of-contents"><div class="table-title"><div class="htitle">Các nội dung chính<span class="toc_toggle">[<a class="icon-list" href="javascript:void(0)">Ẩn</a>]</span></div></div></div>');
+            stringtemplate.insertBefore(".article-table-contents");
+
+            new TableOfContents({
+                from: document.querySelector(".article-table-contents"),
+                to: document.querySelector("#table-content-container")
+            }).generateTable();
+            $("#table-content-container .icon-list").click(function(){
+                $(this).parents("#table-content-container").find("ul:first").slideToggle({ direction: "left" }, 100);
+                var texxx = $(this).text();
+                if(texxx == "Ẩn"){
+                    $(this).html("Hiện")
+                }else{
+                    $(this).html("Ẩn")
+                }
+        })
     }
 });

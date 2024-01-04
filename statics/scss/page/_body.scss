@@ -50,7 +50,9 @@ html {
   -ms-text-size-adjust: 100%; }
 
 img {
-  max-width: 100%; }
+  max-width: 100%;
+  height: auto;
+ }
 
 body {
   color: var(--shop-color-text);
@@ -812,6 +814,9 @@ img.lazyload:not([src]) {
         font-weight: 600;
         padding: 0;
         cursor: pointer; }
+        #pagination .pagination > li a i{
+            line-height: 33px;
+        }
         #pagination .pagination > li > span.current, #pagination .pagination > li a.current {
           background-color: var(--shop-color-main);
           border-color: var(--shop-color-main);
@@ -10761,13 +10766,15 @@ img.lazyload:not([src]) {
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08); }
   .article-loop .article-image {
     position: relative;
-    overflow: hidden; }
+    overflow: hidden;
+    width: 100%;
+ }
   .article-loop .article-image img {
     transition: opacity 0.2s ease-in-out, transform 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     -ms-transition: opacity 0.2s ease-in-out, transform 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     -webkit-transition: opacity 0.2s ease-in-out, transform 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
   .article-loop .article-detail {
-    padding: 15px 20px; }
+    padding: 15px 20px;   width: 100%;}
   .article-loop .article-title .post-title {
     font-size: 20px; }
   .article-loop .article-detail .entry-content {
@@ -10833,7 +10840,9 @@ img.lazyload:not([src]) {
 
 .inforArticle-content .article-content .box-article-detail {
   max-width: 860px;
-  margin: 0 auto 30px; }
+  margin: 0 auto 30px; 
+  word-wrap: break-word;
+}
 
 .inforArticle-content .article-post-meta {
   font-size: 13px;
@@ -11662,6 +11671,7 @@ img.lazyload:not([src]) {
 
 .list-blogs-latest .item-article .post-image {
   width: 100px;
+  height: 60px;
   padding-right: 10px;
   float: left;
   position: relative; }
