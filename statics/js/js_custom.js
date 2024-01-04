@@ -670,4 +670,203 @@ $(document).ready(function () {
                 });
             });
         }
+        if($('.collection-listproduct').length > 0 ){	
+        var toc = '<div id="table-content-container" class="table-of-contents" style="margin: 20px 0px;"><strong class="htitle">Các nội dung chính <span class="toc_toggle">[<a class="icon-list" href="javascript:void(0)">Ẩn</a>]</span></strong>';
+            $('h1, h2, h3, h4, h5, h6').each(function(i, el) {
+                var $el, id;
+                $el = $(el);
+                id = $el.text().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                if (!id) {
+                return;
+                }
+                $el.attr('id', id);
+            });
+            
+            var level = 0;
+        
+            // Lặp qua tất cả các thẻ h1, h2 và h3 trong trang
+            $(".description-productdetail h2,.description-productdetail h3").each(function(i) {
+        
+            // Lấy tiêu đề và ID của tiêu đề hiện tại
+            var title = $(this).text();
+            var slug = $(this).attr("id");
+        
+            // Xác định cấp độ của tiêu đề dựa trên tên thẻ
+            var currentLevel = parseInt(this.tagName.substring(1));
+        
+            // Tạo các liên kết mục lục dựa trên tiêu đề và ID của tiêu đề
+            if (currentLevel > level) {
+                toc += (new Array(currentLevel - level + 1)).join('<ul id="toc_list">');
+            } else if (currentLevel < level) {
+                toc += (new Array(level - currentLevel + 1)).join("</ul>");
+            }
+            level = currentLevel;
+        
+            toc += "<li><a href='#" + slug + "'>" + title + "</a></li>";
+        
+            });
+        
+            // Đóng tất cả các thẻ ul
+            if (level) {
+            toc += (new Array(level + 1)).join("</ul></div>");
+            }
+        
+            // Thêm bảng mục lục vào phần tử có ID là "toc"
+            $('.description-productdetail').prepend(toc);
+
+        // Chọn tất cả các liên kết chỉ mục
+        $('a[href^="#"]').on('click', function(event) {
+            // Ngăn chặn hành động mặc định của trình duyệt
+            event.preventDefault();
+
+            // Lấy giá trị href của liên kết chỉ mục
+            var target = $(this).attr('href');
+
+            // Lấy chiều cao của menu cố định ở đầu trang (nếu có)
+            var headerHeight = $('.header-menu-desktop').outerHeight();
+
+            // Lấy vị trí của phần tử được chọn
+            var targetPosition = $(target).offset().top;
+
+            // Thêm offset bằng chiều cao của menu cố định
+            var offset = targetPosition - headerHeight;
+
+            // Cuộn đến vị trí của phần tử được chọn với offset
+            $('html, body').animate({
+            scrollTop: offset
+            }, 800);
+        });
+        $(".toc_toggle").click(function() {
+            $("#toc_list").slideToggle();
+        });
+        $("#toggleButton").click(function () {
+            $(".box-review").toggleClass("expanded");
+            var buttonText = $(".box-review").hasClass("expanded") ? "Thu gọn" : "Xem thêm đánh giá";
+            $("#toggleButton").html(buttonText);
+        });
+        function closeFilterMobile() {
+            $('.collection-filter').find('.layered_filter_parent').removeClass('show-filter');	
+            setTimeout(function(){ 
+                $('.collection-filter').find('.layered_filter_parent').fadeOut();	
+                $(".layered_filter_parent .overlays-rgba").remove(); 
+            }, 100);
+        }
+        $(document).on('click', '.heading-box .title-filter', function(e){
+			e.preventDefault();
+			$(".layered_filter_parent").append('<div class="overlays-rgba"></div>'); 
+			$('.collection-filter').find('.layered_filter_parent').fadeIn(100);	
+			$('.collection-filter').find('.layered_filter_parent').addClass('show-filter');	
+		});	
+		$(document).on('click', '.layered_filter_parent .close_filter,.layered_filter_parent .overlays-rgba', function(e){
+			e.preventDefault();
+			if($('.checkbox-list li.active').length == 0){
+				var originSort = $('.sort-by li.active').find('span').data('value');
+				$('.checkbox-sortby li').removeClass('active');
+				$('.checkbox-sortby li span[data-value="'+ originSort +'"]').parent().addClass('active');
+			}
+			closeFilterMobile();
+		});	
+		jQuery('.sort-by li').click(function(){
+			hasChangeSort = true;
+			if($(this).hasClass('active')){}
+			else{
+				var defaultSort = $(this).find('span').data('value');
+				$('.sort-by li').removeClass('active');
+				$('.checkbox-sortby li').removeClass('active');
+				$(this).addClass('active');
+				$('.checkbox-sortby li span[data-value="'+ defaultSort +'"]').parent().addClass('active');
+				Stringfilter();			
+			}
+		})
+		jQuery('.checkbox-sortby li').click(function(){
+			if($(this).hasClass('active')){}
+			else{
+				$('.checkbox-sortby li').removeClass('active');
+				$(this).addClass('active');	
+			}
+		})
+		jQuery('.checkbox-list li > input').click(function(){
+			jQuery(this).parent().toggleClass('active');	
+			if(jQuery(window).width() >= 992) Stringfilter();	
+			var indexTitle = jQuery(this).parents('.filter_group').index();
+			if (jQuery(this).parents('.filter_group').find('li.active').length > 0 ){
+				var textFilter = [];
+				jQuery(this).parents('.filter_group').find('li.active').each(function(){
+					var textVal = $(this).find('label').html();
+					textFilter.push(textVal);
+				});
+				$('.filter_tags:eq('+indexTitle+') b').html(textFilter.join(',')).parent().addClass('opened');
+				if ($('.filter_tags:not(.filter_tags_remove_all).opened').length > 1 ){
+					$('.filter_tags_remove_all').addClass('opened');
+				}
+			}
+			else{
+				$('.filter_tags:eq('+indexTitle+') b').html('').parent().removeClass('opened');
+				$('.filter_tags_remove_all').removeClass('opened');
+			}
+			
+			if($('.checkbox-list li.active').length == 0){
+				$('.btn-collection.btn_clear_filter').hide();
+			} else {
+				$('.btn-collection.btn_clear_filter').show();
+			}
+		});	
+		jQuery('.filter_tags_remove').click(function(){
+			$(this).parent().removeClass('opened').find('b').html();
+			var indexClick = $(this).parent().index();
+			$('.filter_group:eq('+indexClick+') li.active input').prop('checked', false);
+			$('.filter_group:eq('+indexClick+') li.active').removeClass('active');
+			if($('.filter_tags:not(.filter_tags_remove_all).opened').length == 1){
+				$('.filter_tags_remove_all').removeClass('opened');
+			}
+			if($('.checkbox-list li.active').length == 0){
+				LoadOrigin();
+				hasChangeSort = false;
+			}
+			else{
+				Stringfilter();
+			}
+		});
+		jQuery('.filter_tags_remove_all').click(function(){
+			$('.checkbox-list li.active input').prop('checked', false);
+			$('.checkbox-list li.active').removeClass('active');
+			$('.filter_tags b').html('').parent().removeClass('opened');
+			$('.filter_tags_remove_all').removeClass('opened');
+			hasChangeSort = false;
+			LoadOrigin();
+		});
+		jQuery('.btn_clear_filter').on("click",function(){
+			$('.checkbox-list li.active input').prop('checked', false);
+			$('.checkbox-list li.active').removeClass('active');
+			$('.filter_tags b').html('').parent().removeClass('opened');
+			$('.filter_tags_remove_all').removeClass('opened');
+			$('.btn-collection.btn_clear_filter').hide();
+			hasChangeSort = false;
+			LoadOrigin();	
+		});	
+		jQuery('#apply-btn-filter').on("click",function(){	
+			if($('.checkbox-list li.active').length == 0){
+				var dataSort = $('.checkbox-sortby li.active').find('span').data('value');
+				$('.sort-by li span[data-value="'+ dataSort +'"]').trigger('click');
+			}else{
+				Stringfilter();		
+			}
+			closeFilterMobile();	
+		});
+		jQuery('#clear-btn-filter').on("click",function(){
+			if($('.checkbox-list li.active').length == 0){
+				var originSort = $('.sort-by li.active').find('span').data('value');
+				$('.checkbox-sortby li').removeClass('active');
+				$('.checkbox-sortby li span[data-value="'+ originSort +'"]').parent().addClass('active');
+			}else{
+				$('.checkbox-list li.active input').prop('checked', false);
+				$('.checkbox-list li.active').removeClass('active');
+				$('.filter_tags b').html('').parent().removeClass('opened');
+				$('.filter_tags_remove_all').removeClass('opened');
+				hasChangeSort = false;
+				LoadOrigin();
+			}
+			closeFilterMobile();	
+		});	
+    }
 });
