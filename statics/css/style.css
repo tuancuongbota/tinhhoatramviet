@@ -6274,7 +6274,7 @@ img.lazyload:not([src]) { visibility: hidden; }
   .mainHeader .header-wrap-logo .wrap-logo a { -webkit-transition: none; transition: none; word-wrap: break-word; white-space: initial; overflow: hidden; -webkit-line-clamp: 1; -webkit-box-orient: vertical; display: -webkit-box; max-width: 120px; text-align: center; margin: 0 auto; padding-left: 52px; }
   .mainHeader .header-wrap-action .header-action { position: initial; }
   .mainHeader .header-wrap-action .header-action .header-action-item { position: initial; margin-left: 7px; }
-  .mainHeader .header-wrap-action .header-action .header-action-item.header-action_menu .header-action_text .box-triangle { top: calc(100% - 5px); }
+  .mainHeader .header-wrap-action .header-action .header-action-item.header-action_menu .header-action_text .box-triangle { top: calc(100% - -11px); }
   .mainHeader .header-wrap-action .header-action .header-action-item .header-action_text .header-action__link .box-text .txt-overflow { max-width: 90px; vertical-align: initial; }
   .mainHeader .header-wrap-action .header-action .header-action-item.locationContainer .header-action_text .box-text .txtnw { font-size: 8px; }
   .mainHeader .header-wrap-action .header-action .header-action-item.locationContainer .header-action_text .box-text .txtnw .fa { font-size: 10px; margin-left: 1px; }
@@ -6702,11 +6702,8 @@ img.lazyload:not([src]) { visibility: hidden; }
   body.body-showcart { overflow: hidden; }
   .mainHeader .header-wrap-action .header-action .header-action-item.header-action_cart .header-action_dropdown, .mainHeader .header-wrap-action .header-action .header-action-item.header-action_cart .box-triangle { display: none !important; }
   body:not(.mainBody-mbcart) .siteCart-mobile { display: block; }
-  /*body:not(.mainBody-mbcart) .siteCart-mobile > .siteCart-mobile__header,
-	body.mainBody-mbcart.template-page .siteCart-mobile > .siteCart-mobile__header{display:none}*/
   body:not(.mainBody-mbcart) .siteCart-mobile > .siteCart-mobile__header { display: none; }
   body.mainBody-mbcart .mainFooter { padding-bottom: 45px; }
-  /*body.mainBody-mbcart.template-page .mainFooter{padding-bottom: 0;}*/
   body.mainBody-mbcart.template-cart .mainFooter { padding-bottom: 56px; }
   body:not(.mainBody-mbcart).template-cart .wrapper-mainCart .order-summary-block .summary-button { position: relative; }
   .mainFooter-product { padding-bottom: 54px; }
@@ -6715,8 +6712,7 @@ img.lazyload:not([src]) { visibility: hidden; }
   .mainBody-product.scroll-down .actionToolbar_product { opacity: 1; visibility: visible; -webkit-transform: translateY(0px); transform: translateY(0px); }
   body.mainBody-mbcart .mainBody-product + .siteCart-mobile:not(.show-cart) { opacity: 0; visibility: hidden; }
   body.mainBody-mbcart .mainBody-product.scroll-down + .siteCart-mobile { opacity: 1; visibility: visible; }
-  body.mainBody-mbcart .mainBody-product.scroll-down .productDetail-toolbar { padding-bottom: 55px; }
-  /* cart */ }
+  body.mainBody-mbcart .mainBody-product.scroll-down .productDetail-toolbar { padding-bottom: 55px; } }
 /*===== PRODUCT LOOP ==========================*/
 .product-loop { position: relative; padding-left: 7px; padding-right: 7px; margin-bottom: 14px; }
 
@@ -9872,7 +9868,7 @@ ADDTHIS ** SHARING
 
 #buyxgety-program .buyxgety-heading p { font-size: 12px; }
 
-#buyxgety-program .buyxgety-heading:after { content: ""; position: absolute; width: 35px; height: 35px; right: 10px; top: 6px; background-image: url("https://file.hstatic.net/1000308580/file/icon-gifbox_21127e78739a40a28f058e5e123d41b1.png"); background-repeat: no-repeat; background-size: contain; }
+#buyxgety-program .buyxgety-heading:after { content: ""; position: absolute; width: 35px; height: 35px; right: 10px; top: 6px; background-image: url("../imgs/icon-gifbox.png"); background-repeat: no-repeat; background-size: contain; }
 
 #buyxgety-program .modal-body { padding: 15px 30px; }
 
@@ -10118,4 +10114,5 @@ hr { width: 100%; }
 .hrv-votesmile-reviews .voteReivew { font-size: 25px; padding: 5px; cursor: pointer; }
 
 .hrv-votesmile-reviews .voteReivewed { cursor: inherit; }
+
 /*# sourceMappingURL=style.css.map */
