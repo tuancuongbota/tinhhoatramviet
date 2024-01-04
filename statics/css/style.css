@@ -6243,7 +6243,7 @@ img.lazyload:not([src]) { visibility: hidden; }
   .mainHeader .header-wrap-logo { text-align: center; max-width: calc(100% - 140px); }
   .mainHeader .header-wrap-action .header-action { position: initial; }
   .mainHeader .header-wrap-action .header-action .header-action-item { position: initial; }
-  .mainHeader .header-wrap-action .header-action .header-action-item .header-action_text .box-triangle { top: calc(100% - 5px); }
+  .mainHeader .header-wrap-action .header-action .header-action-item .header-action_text .box-triangle { top: calc(100% - -11px); }
   .mainHeader .header-wrap-action .header-action .header-action-item .header-action_text .header-action__link .box-text { display: none; }
   .mainHeader .header-wrap-action .header-action .header-action-item .header-action_dropdown { right: 0; left: 0; top: 100%; width: 100vw; height: 100vh; }
   .mainHeader .header-wrap-action .header-action .header-action-item.js-action-show .header-action_text .header-action__link .box-icon .box-icon--close { opacity: 1; visibility: visible; -webkit-transform: scale(1); transform: scale(1); }
