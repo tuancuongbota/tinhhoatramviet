@@ -1140,7 +1140,17 @@ $(document).ready(function () {
 			var updateNote = $('#note').val();
 			var total_price = Number($('.summary-total span').html().replace(/\,/g,'').replace('₫',''));	
 			var a = $(this);
-			
+            var priceMin = '';
+			if(priceMin != ''){
+                if(priceMin > (cart.total_price/100)){
+                    $('.linktocheckout').attr('href','/cart');
+                }
+                else{
+                    $('.linktocheckout').attr('href','/checkout');
+                }
+            }
+            var cartAttributes = {};
+            
 			if(Number(priceMin) <= total_price){
 				$('.summary-alert').removeClass('inn').slideUp('200');
 				if($('#checkbox-bill').is(':checked')){
