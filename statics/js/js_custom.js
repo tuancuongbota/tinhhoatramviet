@@ -361,6 +361,48 @@ $(document).ready(function () {
                 }
             });
         }
+        $(document).on('click','.tree-menu .tree-menu-lv1',function(){
+			$this = $(this).find('.tree-menu-sub');
+			$('.tree-menu .has-child .tree-menu-sub').not($this).slideUp('fast');
+			$(this).find('.tree-menu-sub').slideToggle('fast');
+			$(this).toggleClass('menu-collapsed');
+			$(this).toggleClass('menu-uncollapsed');
+			var $this1 = $(this);
+			$('.tree-menu .has-child').not($this1).removeClass('menu-uncollapsed');
+		});
+        $('.collection-sortby-filter .layered_filter_title').on('click', function(){
+			var layerfilter = $(this).attr('data-layered-click');
+			if (jQuery(window).width() < 992) {
+				if($(this).parent().hasClass('filter_opened')) {
+					$(this).parent().removeClass('filter_opened');
+					$(layerfilter).slideUp(300);
+				}
+				else {
+					$('.layered_filter_mobileContent').slideUp(300);
+					$('.layered_filter_title').parent().removeClass('filter_opened');
+					$(this).parent().addClass('filter_opened');
+					$(layerfilter).slideDown(300);
+				}
+			}
+		});
+		$('.filter_group-subtitle').on('click', function(){
+			jQuery(this).toggleClass('action-group').parent().find('.filter_group-content').stop().slideToggle('medium');
+		});
+        $(document).on('click', '.coupon-item .cp-btn', function(e){ 
+			e.preventDefault();	
+			$('.coupon-item .cp-btn').html('Sao chép mã').removeClass('disabled');
+			var copyText = $(this).attr('data-coupon');
+			var el = document.createElement('textarea');	
+			el.value = copyText ;
+			el.setAttribute('readonly', '');
+			el.style.position = 'absolute';
+			el.style.left = '-9999px';
+			document.body.appendChild(el);		
+			el.select();
+			document.execCommand('copy');
+			document.body.removeChild(el);
+			$(this).html('Đã sao chép').addClass('disabled');
+		});
         var popover = '.cp-icon[data-toggle="popover"]';
 		$(popover).popover({
 			html: true,
@@ -1190,5 +1232,6 @@ $(document).ready(function () {
 				$('.summary-alert').addClass('inn').slideDown('200');
 			}
 		});
+        
     }
 });

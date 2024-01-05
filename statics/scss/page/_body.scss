@@ -11363,7 +11363,9 @@ img.lazyload:not([src]) {
   border: 1px solid #ddd;
   text-align: center;
   font-size: 15px; }
-
+  .box-info-contact li i{
+    line-height: 35px;
+  }
 .box-info-contact li p {
   width: calc(100% - 35px);
   float: left;
@@ -11507,7 +11509,7 @@ img.lazyload:not([src]) {
     padding-right: 15px;
     margin-top: 15px; }
   .box-map-contact iframe {
-    height: 50vh; } }
+    height: 50vh;width: 100%; } }
 
 @media (max-width: 767px) {
   .wrapbox-content-right {
