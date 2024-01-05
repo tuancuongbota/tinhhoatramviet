@@ -4706,7 +4706,9 @@ img.lazyload:not([src]) {
 .coupon-initial .title-coupon h2 {
   font-size: 16px;
   margin: 0 0 8px; }
-
+.home-coupon.coupon-initial .coupon-item__inner{
+    height: 100%;
+}
 .coupon-initial .coupon-item {
   padding-left: 7px;
   padding-right: 7px; }

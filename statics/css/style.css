@@ -6970,6 +6970,8 @@ img.lazyload:not([src]) { visibility: hidden; }
 
 .coupon-initial .title-coupon h2 { font-size: 16px; margin: 0 0 8px; }
 
+.home-coupon.coupon-initial .coupon-item__inner { height: 100%; }
+
 .coupon-initial .coupon-item { padding-left: 7px; padding-right: 7px; }
 
 .coupon-initial .coupon-item__inner { background: var(--home-coupon-bg); display: -webkit-box; display: -ms-flexbox; display: flex; display: -ms-flex; border-radius: 15px; border: 1px solid rgba(0, 0, 0, 0.08); }
