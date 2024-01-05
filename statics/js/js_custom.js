@@ -1002,4 +1002,193 @@ $(document).ready(function () {
                 }
         })
     }
+    $(document).on('click','.mini-cart__quantity .mnc-plus',function(e){
+        e.preventDefault();
+        var line = $(this).parents('.mini-cart__item').index() + 1;
+        var currentQty = parseInt($(this).parents('.mini-cart__item').find('input').val());
+        var newQty = currentQty + 1;
+        $(this).parents('.mini-cart__item').find('input').val(newQty);
+    });
+
+    $(document).on('click','.mini-cart__quantity .mnc-minus',function(e){
+        e.preventDefault();
+        var line = $(this).parents('.mini-cart__item').index() + 1;
+        var currentQty = parseInt($(this).parents('.mini-cart__item').find('input').val());
+        if(currentQty > 1){
+            var newQty = currentQty - 1;
+            $(this).parents('.mini-cart__item').find('input').val(newQty);
+        }
+    }); 
+    if ($('#sliderCouponCart').length > 0){
+        $('#sliderCouponCart').owlCarousel({
+            items: 1,
+            loop: false,
+            nav: true,
+            dots: false,
+            dotsEach: true,
+            smartSpeed:1000,
+            navText:['<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path xmlns="http://www.w3.org/2000/svg" d="m22.707 11.293-7-7a1 1 0 0 0 -1.414 1.414l5.293 5.293h-17.586a1 1 0 0 0 0 2h17.586l-5.293 5.293a1 1 0 1 0 1.414 1.414l7-7a1 1 0 0 0 0-1.414z" data-original="#000000" class=""></path></g></svg>','<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path xmlns="http://www.w3.org/2000/svg" d="m22.707 11.293-7-7a1 1 0 0 0 -1.414 1.414l5.293 5.293h-17.586a1 1 0 0 0 0 2h17.586l-5.293 5.293a1 1 0 1 0 1.414 1.414l7-7a1 1 0 0 0 0-1.414z" data-original="#000000" class=""></path></g></svg>'],
+            responsive: {
+                0: {
+                    stagePadding: 20
+                },
+                768: {
+                    items: 2,
+                    nav: true,
+                    touchDrag: false,
+                    mouseDrag: false
+                },
+                992: {
+                    items: 1,
+                }
+            },
+            onChanged: function (event) {
+                setTimeout(function(){
+                    $('#sliderCouponCart').find('.owl-dots button').each(function(index) {
+                        $(this).attr('aria-label', index + 1);
+                    });
+                }, 400);
+            }
+        });
+    }
+    if ($('#layout-cart').length > 0){
+        if($('.order-invoice-block .regular-checkbox').is(':checked')){
+			$('.bill-field').show();
+		}
+		$('#cartformpage .regular-checkbox').click(function(){
+			if($(this).is(':checked')){
+				$(this).siblings('#re-checkbox-bill').val('yes');
+			}
+			else{
+				$(this).siblings('#re-checkbox-bill').val('no');
+				$('#cartformpage .val-f').siblings('span.text-danger').remove();
+			}
+			$('#cartformpage .bill-field').slideToggle(300);  
+		});
+        $(".check_change").on("change paste keyup", function() {
+			jQuery('.btn-save').html("Lưu thông tin");
+		});
+        $('.order-invoice-block .btn-save').on('click', function(e){
+			e.preventDefault();
+			$('#cartformpage .val-f').each(function(){
+				if($(this).val() === ''){
+					if($(this).siblings('span.text-danger').length == 0)
+						$(this).after('<span class="text-danger">Bạn không được để trống trường này</span>');
+				}
+				else{
+					$(this).siblings('span.text-danger').remove();
+					setTimeout(function(){
+						jQuery('.btn-save').html("Đã lưu thông tin");
+					}, 500);
+				}
+				if($(this).hasClass('val-n') && $(this).val().trim().length<10){
+					if($(this).siblings('span.text-danger').length == 0)
+						$(this).after('<span class="text-danger">Mã số thuế phải tối thiểu 10 ký tự</span>');
+				}
+
+				if($(this).hasClass('val-mail') && HRT.All.checkemail($(this).val()) == false){
+					if($(this).siblings('span.text-danger').length == 0)
+						$(this).after('<span class="text-danger">Email không hợp lệ</span>');
+				}
+
+			});
+		});
+        $(document).on("click","#btnCart-checkout:not(.disabled)",function(e){
+			e.preventDefault();
+			var updateNote = $('#note').val();
+			var total_price = Number($('.summary-total span').html().replace(/\,/g,'').replace('₫',''));	
+			var a = $(this);
+			
+			if(Number(priceMin) <= total_price){
+				$('.summary-alert').removeClass('inn').slideUp('200');
+				if($('#checkbox-bill').is(':checked')){
+					var a = $(this);
+					swal({
+						title: "Bạn có muốn xuất hóa đơn?",
+						text: "Hãy kiểm tra lại thông tin hóa đơn của mình thật chính xác!",
+						icon: "warning",
+						buttons: ["Không", "Có"],
+						className: "swal-cart-checkInvoice"
+					}).then(function(){
+						$('body').on('click', '.swal-button--confirm', function(){
+							var f = true;
+							$('#cartformpage .val-f').each(function(){
+								if($(this).val() === ''){
+									f = false;
+									if($(this).siblings('span.text-danger').length == 0)
+										$(this).after('<span class="text-danger">Bạn không được để trống trường này</span>');
+								}else{
+									$(this).siblings('span.text-danger').remove();
+								}
+								if($(this).hasClass('val-n') && $(this).val().trim().length<10){
+									f = false;
+									if($(this).siblings('span.text-danger').length == 0)
+										$(this).after('<span class="text-danger">Mã số thuế phải tối thiểu 10 ký tự</span>');
+								}
+								if($(this).hasClass('val-mail') && HRT.All.checkemail($(this).val()) == false){
+									if($(this).siblings('span.text-danger').length == 0)
+										$(this).after('<span class="text-danger">Email không hợp lệ</span>');
+								}
+
+							});
+
+							if(f){
+
+								var company = $('input[name="attributes[bill_order_company]"]').val();
+								var address = $('input[name="attributes[bill_order_address]"]').val();
+								var tax = $('input[name="attributes[bill_order_tax_code]"]').val();
+								var mail = $('input[name="attributes[bill_email]"]').val();
+								cartAttributes.invoice = 'yes';
+								if(company == '' && cartAttributes.hasOwnProperty('bill_order_company')){
+									cartAttributes.bill_order_company = null;
+								}
+								else{
+									cartAttributes.bill_order_company = company;
+								}
+
+								if(address == '' && cartAttributes.hasOwnProperty('bill_order_address')){
+									cartAttributes.bill_order_address = null;
+								}
+								else{
+									cartAttributes.bill_order_address = address;
+								}
+
+								if(tax == '' && cartAttributes.hasOwnProperty('bill_order_tax_code')){
+									cartAttributes.bill_order_tax_code = null;
+								}
+								else{
+									cartAttributes.bill_order_tax_code = tax;
+								}
+
+								if(mail == '' && cartAttributes.hasOwnProperty('bill_email')){
+									cartAttributes.bill_email = null;
+								}
+								else{
+									cartAttributes.bill_email = mail;
+								}
+							}
+							if(!f) return false;
+						});
+						$('body').on('click', '.swal-button--cancel', function(){
+							if(cartAttributes.hasOwnProperty('invoice')) cartAttributes.invoice = "no";
+							if(cartAttributes.hasOwnProperty('bill_order_company')) cartAttributes.bill_order_company = null;
+							if(cartAttributes.hasOwnProperty('bill_order_address')) cartAttributes.bill_order_address = null;
+							if(cartAttributes.hasOwnProperty('bill_order_tax_code')) cartAttributes.bill_order_tax_code = null;
+							if(cartAttributes.hasOwnProperty('bill_email')) cartAttributes.bill_email = null;
+						});
+					});
+				}
+				else{
+					if(cartAttributes.hasOwnProperty('invoice')) cartAttributes.invoice = "no";
+					if(cartAttributes.hasOwnProperty('bill_order_company')) cartAttributes.bill_order_company = null;
+					if(cartAttributes.hasOwnProperty('bill_order_address')) cartAttributes.bill_order_address = null;
+					if(cartAttributes.hasOwnProperty('bill_order_tax_code')) cartAttributes.bill_order_tax_code = null;
+					if(cartAttributes.hasOwnProperty('bill_email')) cartAttributes.bill_email = null;
+				}
+			}
+			else{
+				$('.summary-alert').addClass('inn').slideDown('200');
+			}
+		});
+    }
 });

@@ -6972,7 +6972,7 @@ img.lazyload:not([src]) { visibility: hidden; }
 
 .coupon-initial .coupon-item { padding-left: 7px; padding-right: 7px; }
 
-.coupon-initial .coupon-item__inner { background: var(--home-coupon-bg); display: -webkit-box; display: -ms-flexbox; display: flex; display: -ms-flex; border-radius: 15px; height: 100%; border: 1px solid rgba(0, 0, 0, 0.08); }
+.coupon-initial .coupon-item__inner { background: var(--home-coupon-bg); display: -webkit-box; display: -ms-flexbox; display: flex; display: -ms-flex; border-radius: 15px; border: 1px solid rgba(0, 0, 0, 0.08); }
 
 .coupon-initial .coupon-item__left { -webkit-box-flex: 0; flex: 0 0 30%; -ms-flex: 0 0 30%; max-width: 30%; position: relative; border-right: 1px dashed var(--shop-color-border); padding: 8px; }
 
