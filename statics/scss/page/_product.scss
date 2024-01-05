@@ -168,6 +168,9 @@ div.product-gallery__item {
 .description-productdetail table td, .description-productdetail table th {
     padding: 7px
 }
+.productDetail--box.box-detail-coupon .coupon-initial .coupon-item__inner {
+    height: 100%;
+}
 @media only screen and (max-width: 768px) {
     table {
         width: 100% !important;

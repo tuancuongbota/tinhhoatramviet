@@ -10063,6 +10063,8 @@ div.product-gallery__item { height: 1px; overflow: hidden; padding: 49.5%; displ
 
 .description-productdetail table td, .description-productdetail table th { padding: 7px; }
 
+.productDetail--box.box-detail-coupon .coupon-initial .coupon-item__inner { height: 100%; }
+
 @media only screen and (max-width: 768px) { table { width: 100% !important; overflow: auto !important; } }
 @media only screen and (max-width: 991px) { .mainBody-product .productDetail--box .description-productdetail .row:not(:nth-child(1)) div:nth-child(1).mobile-focus { -webkit-box-ordinal-group: 3; -ms-flex-order: 2; order: 2; }
   .mainBody-product .productDetail--box .description-productdetail .row:not(:nth-child(1)) div:nth-child(2).mobile-focus { -webkit-box-ordinal-group: 2; -ms-flex-order: 1; order: 1; } }
